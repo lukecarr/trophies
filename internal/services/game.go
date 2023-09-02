@@ -12,12 +12,19 @@ type GameTrophyCounts struct {
 }
 
 type GameService interface {
+	Get(id int) (*models.Game, error)
 	GetAll() ([]*models.Game, error)
 	GetCounts() ([]*GameTrophyCounts, error)
 }
 
 type GameServiceSql struct {
 	Sqlx *sqlx.DB
+}
+
+func (s GameServiceSql) Get(id int) (*models.Game, error) {
+	game := &models.Game{}
+	err := s.Sqlx.Get(game, "SELECT * FROM game WHERE id = $1", id)
+	return game, err
 }
 
 func (s GameServiceSql) GetAll() ([]*models.Game, error) {

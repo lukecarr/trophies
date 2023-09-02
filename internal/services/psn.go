@@ -151,7 +151,7 @@ func fetchAccessToken(accessCode string) (string, string, error) {
 	return res.AccessToken, res.RefreshToken, nil
 }
 
-func New(npssoToken string) *PsnClient {
+func NewPsnClient(npssoToken string) *PsnClient {
 	code, err := fetchAccessCode(npssoToken)
 	if err != nil {
 		log.Fatalln("Failed to fetch PSN access code:", err)
@@ -270,9 +270,7 @@ func (c *PsnClient) GetTrophies(gameID, service string) ([]Trophy, error) {
 	}
 
 	var trophiesResponse GetTrophiesResponse
-	if err := json.Unmarshal(body, &trophiesResponse); err != nil {
-		return nil, err
-	}
+	err = json.Unmarshal(body, &trophiesResponse)
 
-	return trophiesResponse.Trophies, nil
+	return trophiesResponse.Trophies, err
 }

@@ -7,7 +7,7 @@ import Header from "./components/Header";
 const Layout: FunctionalComponent = () => {
     return <div className="min-h-screen flex flex-col">
         <Header />
-        <main class="min-y-8 flex-1 container px-4">
+        <main class="min-y-8 flex-1">
             <Router />
         </main>
         <Footer />

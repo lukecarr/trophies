@@ -11,6 +11,9 @@ dependencies:
   preact:
     specifier: 10.17.1
     version: 10.17.1
+  preact-async-route:
+    specifier: 2.2.1
+    version: 2.2.1
   preact-router:
     specifier: 4.1.2
     version: 4.1.2(preact@10.17.1)
@@ -1202,6 +1205,10 @@ packages:
       picocolors: 1.0.0
       source-map-js: 1.0.2
     dev: true
+
+  /preact-async-route@2.2.1:
+    resolution: {integrity: sha512-8bg1007akXs3YDmzYT4McaTe6ji2FIzcc0/NTlu+vjJaKPNQ8lNG/HQ6LP+FoIxQ4m/KH5vvJCHJN5ADp2iNGA==}
+    dev: false
 
   /preact-router@4.1.2(preact@10.17.1):
     resolution: {integrity: sha512-uICUaUFYh+XQ+6vZtQn1q+X6rSqwq+zorWOCLWPF5FAsQh3EJ+RsDQ9Ee+fjk545YWQHfUxhrBAaemfxEnMOUg==}

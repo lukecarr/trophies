@@ -89,6 +89,16 @@ The NPSSO token should return a response that looks like this:
 
 Copy the token value (not including the quote characters) and use this as the value of the `NPSSO` environment variable.
 
+### `RAWG_API_KEY`
+
+The [RAWG API][rawg] is used by Trophies.gg to obtain accompanying metadata for games, including background images, Metacritic scores, and genre information.
+
+Using the link above, you can sign up for a free account and obtain an API key that is limited 20K requests per month.
+
+> Trophies.gg caches results from the RAWG API in an effort to reduce API consumption (and keep you within their free tier limits).
+
+Once you've obtained an API key, include it as an environment variable and enjoy beautiful game art and extra metadata!
+
 ## Versioning
 
 Trophies.gg uses [Semantic Versioning v2.0.0][semver].
@@ -102,4 +112,4 @@ Trophies.gg is distributed under the [Apache 2.0](LICENSE) license.
 [PlayStation]: https://www.playstation.com/
 [npsso]: https://ca.account.sony.com/api/v1/ssocookie
 [semver]: https://semver.org/spec/v2.0.0.html
-
+[rawg]: https://rawg.io/apidocs

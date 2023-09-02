@@ -17,7 +17,7 @@ type Server struct {
 	Env    *env.Env
 }
 
-func New(dsn, npsso string) *Server {
+func New(dsn, npsso, rawg string) *Server {
 	db, err := sql.New(dsn)
 
 	if err != nil {
@@ -53,10 +53,11 @@ func New(dsn, npsso string) *Server {
 		Router: router,
 		Env:    env.New(),
 	}
-	srv.Env.Services = env.NewSQlServices(db)
+	srv.Env.Services = env.NewServices(db, rawg)
 
 	srv.Router.GET("/api/version", routes.Version())
 	routes.Game(srv.Env, srv.Router)
+	routes.Metadata(srv.Env, srv.Router)
 
 	return srv
 }

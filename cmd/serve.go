@@ -28,7 +28,9 @@ func MakeServeCmd() *cobra.Command {
 				addr = val
 			}
 
-			srv := server.New(dsn, npsso)
+			rawg := os.Getenv("RAWG_API_KEY")
+
+			srv := server.New(dsn, npsso, rawg)
 			srv.Listen(addr)
 		},
 	}

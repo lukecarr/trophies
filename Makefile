@@ -22,7 +22,7 @@ run: build-frontend migrate
 	go run $(GO_MAIN) serve
 
 # Fetch data (example target)
-fetch:
+fetch: migrate
 	go run $(GO_MAIN) fetch
 
 # Run in production mode

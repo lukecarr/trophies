@@ -30,7 +30,7 @@ func MakeFetchCmd() *cobra.Command {
 				log.Fatalln("You must set the NPSSO environment variable")
 			}
 
-			psn := services.New(npsso)
+			psn := services.NewPsnClient(npsso)
 			titles, _ := psn.GetTitles()
 
 			tx, err := conn.Sqlx.Beginx()

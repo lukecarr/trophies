@@ -82,12 +82,12 @@ const Home: FunctionalComponent = () => {
         return gamesIndex.search(search).map(x => x.item);
     }, [data, search]);
 
-    return <>
+    return <div className="container px-4">
         <input type="text" value={search} onInput={e => setSearch((e.target as HTMLInputElement).value.trim().toLowerCase())} placeholder="Search..." className="mb-4 w-full px-4 py-2 bg-gray-100 dark:bg-slate-800 dark:text-slate-400" />
         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 auto-rows-[1fr]">
-            {games.map(x => <GameCard key={x.id} game={x} counts={(counts ?? []).filter(({ id, rarity }) => id === x.id && rarity !== 'platinum')} />)}
+            {games.map(x => <a key={x.id} href={`/games/${x.id}`}><GameCard game={x} counts={(counts ?? []).filter(({ id, rarity }) => id === x.id && rarity !== 'platinum')} /></a>)}
         </div>
-    </>;
+    </div>;
 };
 
 export default Home;

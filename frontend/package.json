@@ -9,6 +9,7 @@
   "dependencies": {
     "fuse.js": "6.6.2",
     "preact": "10.17.1",
+    "preact-async-route": "2.2.1",
     "preact-router": "4.1.2",
     "swr": "2.2.2"
   },
