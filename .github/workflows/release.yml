@@ -55,9 +55,6 @@ jobs:
 
   docker:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
 
     steps:
       - name: Checkout
@@ -78,7 +75,7 @@ jobs:
 
       - name: Generate build date
         id: build_date_gen
-        run: echo ::set-output name=build_date::$(date --iso-8601=minutes)
+        run: echo name=build_date=$(date --iso-8601=minutes) >> $GITHUB_OUTPUT
 
       - name: Build and push image
         uses: docker/build-push-action@v4
