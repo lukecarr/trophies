@@ -8,7 +8,7 @@ COPY ./frontend ./
 RUN pnpm install --frozen-lockfile
 RUN pnpm build
 
-FROM golang:1.20-alpine AS go-builder
+FROM golang:1.21-alpine AS go-builder
 
 RUN apk update && apk add --no-cache git ca-certificates tzdata && update-ca-certificates
 
