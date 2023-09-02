@@ -26,8 +26,8 @@ devDependencies:
     specifier: 10.4.15
     version: 10.4.15(postcss@8.4.29)
   million:
-    specifier: 2.6.0-beta.11
-    version: 2.6.0-beta.11
+    specifier: 2.6.0-beta.12
+    version: 2.6.0-beta.12
   postcss:
     specifier: 8.4.29
     version: 8.4.29
@@ -652,7 +652,7 @@ packages:
     dependencies:
       browserslist: 4.21.10
       caniuse-lite: 1.0.30001525
-      fraction.js: 4.3.5
+      fraction.js: 4.3.6
       normalize-range: 0.1.2
       picocolors: 1.0.0
       postcss: 8.4.29
@@ -859,8 +859,8 @@ packages:
       to-regex-range: 5.0.1
     dev: true
 
-  /fraction.js@4.3.5:
-    resolution: {integrity: sha512-58DncB2bO/8ZvTHapG7U2KEbeFFyUbbrFFkHakecpdUSqJrQnEuBeTUPEggIVkx5cnugZJ4IVzk2Nbb32MOxBg==}
+  /fraction.js@4.3.6:
+    resolution: {integrity: sha512-n2aZ9tNfYDwaHhvFTkhFErqOMIb8uyzSQ+vGJBjZyanAKZVbGUQ1sngfk9FdkBw7G26O7AgNjLcecLffD1c7eg==}
     dev: true
 
   /fs.realpath@1.0.0:
@@ -1036,8 +1036,8 @@ packages:
       picomatch: 2.3.1
     dev: true
 
-  /million@2.6.0-beta.11:
-    resolution: {integrity: sha512-IdADUGj6oDPm9ZfyEP9qwO45ItNq8vf8mIDZ3BtSnxQsjvyi1yqBSfZClAyyo+Ez/DOF9+IzZ61J0g5oqA3V7Q==}
+  /million@2.6.0-beta.12:
+    resolution: {integrity: sha512-ps7oiPYgl2rlmFSdNKvhcfCxaRHTfueUYEjdzOxWcvRuF/jO+ngL4gq1P6+CamG3CLCRXdcPRgHZ9IQHAkI31A==}
     dependencies:
       '@babel/core': 7.22.11
       '@babel/generator': 7.22.10
