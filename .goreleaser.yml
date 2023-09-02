@@ -19,12 +19,7 @@ builds:
       - windows_amd64
 
 archives:
-  - replacements:
-      darwin: macos
-      386: 32bit
-      amd64: 64bit
-      arm: arm32
-    format_overrides:
+  - format_overrides:
       - goos: windows
         format: zip
 
