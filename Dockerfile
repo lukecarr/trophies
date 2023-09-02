@@ -1,4 +1,4 @@
-FROM node:18 AS node-builder
+FROM node:20 AS node-builder
 
 RUN npm i -g pnpm@8.7.0
 
@@ -8,7 +8,7 @@ COPY ./frontend ./
 RUN pnpm install --frozen-lockfile
 RUN pnpm build
 
-FROM golang:1.20-alpine AS go-builder
+FROM golang:1.21-alpine AS go-builder
 
 RUN apk update && apk add --no-cache git ca-certificates tzdata && update-ca-certificates
 
