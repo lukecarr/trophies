@@ -20,6 +20,10 @@ docker run -d -p 3000:3000 ghcr.io/lukecarr/trophies:latest
 
 You can find a comprehensive list of Docker image tags [here][docker-images].
 
+### Examples
+
+In the [examples](/examples) directory, you can find different scenarios for deploying/using Trophies.gg.
+
 ## Usage
 
 The `trophies` binary is actually a CLI application that can perform many different operations (including running the all-in-one web server).
