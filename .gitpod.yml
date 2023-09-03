@@ -1,21 +1,11 @@
 image: gitpod/workspace-full
 
 tasks:
-  - name: Go dependencies
-    init: >
-      go mod download &&
-      gp sync-done go-deps
-  
-  - name: Node.js dependencies
-    init: >
-      cd frontend &&
-      pnpm install --frozen-lockfile &&
-      gp sync-done nodejs-deps
-
   - name: Run application
     init: >
-      gp sync-await go-deps &&
-      gp sync-await nodejs-deps
+      go mod download &&
+      cd frontend &&
+      pnpm install --frozen-lockfile
     command: make run
     env:
       DSN: /workspace/trophies/trophies.db
