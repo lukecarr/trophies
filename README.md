@@ -1,5 +1,11 @@
 # 🏆 Trophies.gg
 
+[![GitHub release (with filter)](https://img.shields.io/github/v/release/lukecarr/trophies)][release]
+[![Docker image size](https://ghcr-badge.egpl.dev/lukecarr/trophies/size)][docker-images]
+[![GitHub](https://img.shields.io/github/license/lukecarr/trophies)](LICENSE)
+[![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability/lukecarr/trophies)][codeclimate]
+[![Matrix](https://img.shields.io/matrix/trophies%3Amatrix.org)][matrix]
+
 > ⚠️ This project is currently pre-alpha and should be considered a WIP: breaking changes are to be expected frequently, and most functionality is missing/partially implemented!
 
 Trophies.gg is a lightweight, self-hosted trophy tracker for PSN. The entire web app (including the backend, frontend, and persistent storage/database) is published as a single zero-dependency executable!
@@ -95,9 +101,9 @@ Copy the token value (not including the quote characters) and use this as the va
 
 ### `RAWG_API_KEY`
 
-The [RAWG API][rawg] is used by Trophies.gg to obtain accompanying metadata for games, including background images, Metacritic scores, and genre information.
+The [RAWG API][rawg] is used by Trophies.gg to obtain accompanying game metadata, including background images, Metacritic scores, and genre information.
 
-Using the link above, you can sign up for a free account and obtain an API key that is limited 20K requests per month.
+Using the link above, you can sign up for a free account and obtain an API key limited to 20K requests per month.
 
 > Trophies.gg caches results from the RAWG API in an effort to reduce API consumption (and keep you within their free tier limits).
 
@@ -121,6 +127,9 @@ Trophies.gg uses [Semantic Versioning v2.0.0][semver].
 
 Trophies.gg is distributed under the [Apache 2.0](LICENSE) license.
 
+[release]: https://github.com/lukecarr/trophies/releases/latest
+[codeclimate]: https://codeclimate.com/github/lukecarr/trophies
+[matrix]: https://matrix.to/#/#trophies:matrix.org
 [releases]: https://github.com/lukecarr/trophies/releases
 [docker-images]: https://github.com/lukecarr/trophies/pkgs/container/trophies/versions
 [PlayStation]: https://www.playstation.com/
