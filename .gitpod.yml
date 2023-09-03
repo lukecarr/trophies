@@ -2,10 +2,7 @@ image: gitpod/workspace-full
 
 tasks:
   - name: Run application
-    init: >
-      go mod download &&
-      cd frontend &&
-      pnpm install --frozen-lockfile
+    init: go mod download && cd frontend && pnpm install --frozen-lockfile
     command: make run
     env:
       DSN: /workspace/trophies/trophies.db
