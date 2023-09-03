@@ -11,7 +11,7 @@ type Metadata = {
 
 const GameHeader: FunctionalComponent<Metadata> = ({ name, metacritic, released, platforms }) => {
     return <div className="container px-4 py-16 flex flex-col justify-center items-start space-y-4">
-        <h2 className="text-4xl font-extrabold">{name}</h2>
+        <h2 className="text-4xl text-white font-extrabold">{name}</h2>
         <div className="space-x-4">
             {platforms.map((platform, i) => <span key={i} className="bg-gray-100 text-gray-700 px-2 py-1 font-semibold">{platform}</span>)}
             <span className="bg-gray-100 text-gray-700 px-2 py-1 font-semibold">{metacritic}% Metacritic</span>
