@@ -11,3 +11,8 @@ ports:
   - name: HTTP
     port: 3000
     onOpen: ignore
+
+jetbrains:
+  plugins:
+    - intellij.vitejs
+    - com.intellij.tailwindcss
