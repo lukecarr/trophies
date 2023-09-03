@@ -28,3 +28,13 @@ fetch: migrate
 # Run in production mode
 run-prod: build-frontend build-backend
 	./$(BACKEND_BIN) serve
+
+watch-frontend:
+	pnpm --dir $(FRONTEND_DIR) watch
+
+watch-backend:
+	gow -c -e=go,mod,ts,tsx,css run . serve
+
+# Build frontend first, and then run in watch mode in parallel
+watch: build-frontend
+	make watch-frontend & make watch-backend
