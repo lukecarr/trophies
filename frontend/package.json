@@ -12,6 +12,7 @@
     "preact": "10.17.1",
     "preact-async-route": "2.2.1",
     "preact-router": "4.1.2",
+    "react-icons": "4.10.1",
     "swr": "2.2.2"
   },
   "devDependencies": {
