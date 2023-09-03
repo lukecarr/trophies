@@ -103,7 +103,7 @@ Copy the token value (not including the quote characters) and use this as the va
 
 The [RAWG API][rawg] is used by Trophies.gg to obtain accompanying game metadata, including background images, Metacritic scores, and genre information.
 
-Using the link above, you can sign up for a free account and obtain an API key limited to 20K requests per month.
+Using the link above, you can sign up for a free account and obtain an API key limited to 20K monthly requests.
 
 > Trophies.gg caches results from the RAWG API in an effort to reduce API consumption (and keep you within their free tier limits).
 
@@ -117,7 +117,7 @@ Once you've obtained an API key, include it as an environment variable and enjoy
 
 ### Individual game page
 
-![image](https://github.com/lukecarr/trophies/assets/24438483/3741fb65-32fd-4e1d-a6a3-929cb1a7d648)
+![image](https://github.com/lukecarr/trophies/assets/24438483/6e0444cc-4c87-4706-8809-fd7b2b2010a2)
 
 ## Versioning
 
