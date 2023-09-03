@@ -10,7 +10,7 @@
 
 Trophies.gg is a lightweight, self-hosted trophy tracker for PSN. The entire web app (including the backend, frontend, and persistent storage/database) is published as a single zero-dependency executable!
 
-![image](https://github.com/lukecarr/trophies/assets/24438483/0e17e80f-c6bf-4c9a-bf6f-7082c938f90d)
+![image](https://github.com/lukecarr/trophies/assets/24438483/20e5ae31-8d3c-45e6-8f6c-15e973811e8f)
 
 ## Installation
 
@@ -113,7 +113,7 @@ Once you've obtained an API key, include it as an environment variable and enjoy
 
 ### Homepage (all games)
 
-![image](https://github.com/lukecarr/trophies/assets/24438483/0e17e80f-c6bf-4c9a-bf6f-7082c938f90d)
+![image](https://github.com/lukecarr/trophies/assets/24438483/20e5ae31-8d3c-45e6-8f6c-15e973811e8f)
 
 ### Individual game page
 
