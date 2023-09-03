@@ -14,15 +14,14 @@ const BuildInfo: FunctionalComponent = () => {
     if (error || !data) return null;
 
     return <div className="text-gray-700 dark:text-slate-200 text-sm text-right font-mono">
-        {data.version && <p>
+        {data.version && <div className="space-x-2">
             <Link href={`https://github.com/lukecarr/trophies/releases/tag/${data.version}`} newTab>
                 {data.version}
-                {data.commit && <Link href={`https://github.com/lukecarr/trophies/commit/${data.commit}`} newTab>
-                    {' '}
-                    ({data.commit.slice(0, 7)})
-                </Link>}
             </Link>
-        </p>}
+            {data.commit && <Link href={`https://github.com/lukecarr/trophies/commit/${data.commit}`} newTab>
+                ({data.commit.slice(0, 7)})
+            </Link>}
+        </div>}
         <p className="text-xs">Built at: {data.date}</p>
     </div>
 }

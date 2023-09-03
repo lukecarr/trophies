@@ -15,9 +15,11 @@ func Metadata(e *env.Env, h *httprouter.Router) {
 }
 
 type MetadataResponse struct {
-	Name            string `json:"name"`
-	BackgroundImage string `json:"backgroundImage"`
-	MetacriticScore int    `json:"metacritic"`
+	Name            string   `json:"name"`
+	BackgroundImage string   `json:"backgroundImage"`
+	MetacriticScore int      `json:"metacritic"`
+	ReleaseDate     string   `json:"released"`
+	Platforms       []string `json:"platforms"`
 }
 
 func getMetadata(e *env.Env) func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
@@ -41,7 +43,8 @@ func getMetadata(e *env.Env) func(w http.ResponseWriter, r *http.Request, ps htt
 		}
 
 		resp := MetadataResponse{
-			Name: game.Name,
+			Name:      game.Name,
+			Platforms: strings.Split(game.Platform, ","),
 		}
 
 		cacheKey := fmt.Sprintf("game.%d.metadata", game.ID)
@@ -62,6 +65,7 @@ func getMetadata(e *env.Env) func(w http.ResponseWriter, r *http.Request, ps htt
 			if metadata != nil {
 				resp.BackgroundImage = metadata.BackgroundImageURL
 				resp.MetacriticScore = metadata.MetacriticScore
+				resp.ReleaseDate = metadata.ReleaseDate
 
 				jsonString, err := json.Marshal(resp)
 				if err != nil {

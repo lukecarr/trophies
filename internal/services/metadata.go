@@ -19,6 +19,7 @@ type GameMetadata struct {
 	Name               string `json:"name"`
 	BackgroundImageURL string `json:"background_image"`
 	MetacriticScore    int    `json:"metacritic"`
+	ReleaseDate        string `json:"released"`
 }
 
 type SearchGameResponse struct {
