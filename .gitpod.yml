@@ -10,4 +10,4 @@ tasks:
 ports:
   - name: HTTP
     port: 3000
-    onOpen: open-browser
+    onOpen: ignore
