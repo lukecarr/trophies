@@ -1,0 +1,20 @@
+image: gitpod/workspace-full
+
+tasks:
+  - name: Build and migrate backend
+    init: make build-backend && make migrate
+    env:
+      DSN: /workspace/trophies/trophies.db
+
+  - name: Build frontend
+    init: make build-frontend
+
+  - name: Run application
+    command: make run
+    env:
+      DSN: /workspace/trophies/trophies.db
+
+ports:
+  - name: HTTP
+    port: 3000
+    onOpen: open-browser
