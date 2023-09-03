@@ -7,6 +7,7 @@ import (
 	"github.com/lukecarr/trophies/internal/env"
 	"net/http"
 	"strconv"
+	"strings"
 )
 
 func Metadata(e *env.Env, h *httprouter.Router) {
@@ -16,6 +17,7 @@ func Metadata(e *env.Env, h *httprouter.Router) {
 type MetadataResponse struct {
 	Name            string `json:"name"`
 	BackgroundImage string `json:"backgroundImage"`
+	MetacriticScore int    `json:"metacritic"`
 }
 
 func getMetadata(e *env.Env) func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
@@ -42,14 +44,16 @@ func getMetadata(e *env.Env) func(w http.ResponseWriter, r *http.Request, ps htt
 			Name: game.Name,
 		}
 
-		cacheKey := fmt.Sprintf("game.%d.background", game.ID)
+		cacheKey := fmt.Sprintf("game.%d.metadata", game.ID)
 		if x, found := e.Cache.Get(cacheKey); found {
-			background := x.(string)
-			if background != "missing" {
-				resp.BackgroundImage = x.(string)
+			err := json.Unmarshal(x.([]byte), &resp)
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
 			}
 		} else {
-			metadata, err := e.Services.Metadata.SearchGame(game.Name)
+			platforms, excludePlatforms := platformToRawgPlatform(game.Platform)
+			metadata, err := e.Services.Metadata.SearchGame(game.Name, platforms, excludePlatforms)
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 				return
@@ -57,7 +61,15 @@ func getMetadata(e *env.Env) func(w http.ResponseWriter, r *http.Request, ps htt
 
 			if metadata != nil {
 				resp.BackgroundImage = metadata.BackgroundImageURL
-				e.Cache.Set(cacheKey, resp.BackgroundImage, 0)
+				resp.MetacriticScore = metadata.MetacriticScore
+
+				jsonString, err := json.Marshal(resp)
+				if err != nil {
+					http.Error(w, err.Error(), http.StatusInternalServerError)
+					return
+				}
+
+				e.Cache.Set(cacheKey, jsonString, 0)
 			} else {
 				e.Cache.Set(cacheKey, "missing", 0)
 			}
@@ -70,4 +82,35 @@ func getMetadata(e *env.Env) func(w http.ResponseWriter, r *http.Request, ps htt
 			return
 		}
 	}
+}
+
+func platformToRawgPlatform(platforms string) (string, string) {
+	if platforms == "" {
+		return "", ""
+	}
+
+	platformsMap := map[string]string{
+		"PS3":    "16",
+		"PSVITA": "19",
+		"PS4":    "18",
+		"PS5":    "187",
+	}
+
+	allPlatforms := strings.Split(platforms, ",")
+
+	for _, platform := range allPlatforms {
+		if rawgPlatform, ok := platformsMap[platform]; ok {
+			// Build a string of all other platforms (excluding the matched one)
+			otherPlatforms := make([]string, len(allPlatforms)-1)
+			for _, x := range allPlatforms {
+				if x != platform {
+					otherPlatforms = append(otherPlatforms, x)
+				}
+			}
+
+			return rawgPlatform, strings.Join(otherPlatforms, ",")
+		}
+	}
+
+	return "", ""
 }

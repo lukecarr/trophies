@@ -4,10 +4,11 @@ import (
 	"encoding/json"
 	"net/http"
 	"net/url"
+	"regexp"
 )
 
 type MetadataService interface {
-	SearchGame(name string) (*GameMetadata, error)
+	SearchGame(name, platform, excludePlatforms string) (*GameMetadata, error)
 }
 
 type MetadataServiceRawg struct {
@@ -17,19 +18,24 @@ type MetadataServiceRawg struct {
 type GameMetadata struct {
 	Name               string `json:"name"`
 	BackgroundImageURL string `json:"background_image"`
+	MetacriticScore    int    `json:"metacritic"`
 }
 
 type SearchGameResponse struct {
 	Results []GameMetadata `json:"results"`
 }
 
-func (m *MetadataServiceRawg) SearchGame(name string) (*GameMetadata, error) {
+func (m *MetadataServiceRawg) SearchGame(name, platform, excludePlatforms string) (*GameMetadata, error) {
 	requestURL := "https://api.rawg.io/api/games"
+
+	// Remove all non-ASCII characters from name (i.e. trademark symbols, copyright, etc.)
+	name = regexp.MustCompile(`[^\x00-\x7F]+`).ReplaceAllString(name, "")
+
 	params := url.Values{
-		"key":          {m.ApiKey},
-		"search":       {name},
-		"search_exact": {"true"},
-		"platforms":    {"16,18,19,187"},
+		"key":               {m.ApiKey},
+		"search":            {name},
+		"platforms":         {platform},
+		"exclude_platforms": {excludePlatforms},
 	}
 	requestURL += "?" + params.Encode()
 

@@ -198,6 +198,13 @@ func (c *PsnClient) GetTitles() ([]Title, error) {
 		return nil, err
 	}
 
+	// If the title name ends with " trophies" (case-insensitive), remove it.
+	for i, title := range titlesResponse.Titles {
+		if strings.HasSuffix(strings.ToLower(strings.TrimSpace(title.Name)), " trophies") {
+			titlesResponse.Titles[i].Name = strings.TrimSpace(title.Name[:len(title.Name)-len(" trophies")])
+		}
+	}
+
 	return titlesResponse.Titles, nil
 }
 

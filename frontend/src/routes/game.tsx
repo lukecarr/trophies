@@ -4,6 +4,14 @@ import useSWR from "swr";
 type Metadata = {
     name: string;
     backgroundImage?: string;
+    metacritic: number;
+};
+
+const GameHeader: FunctionalComponent<Metadata> = ({ name, metacritic }) => {
+    return <div className="container px-4 py-16 flex flex-col justify-center items-start space-y-4">
+        <h2 className="text-4xl font-extrabold">{name}</h2>
+        <p className="bg-gray-100 text-gray-700 px-2 py-1 font-semibold">{metacritic}% Metacritic</p>
+    </div>;
 };
 
 const Page: FunctionalComponent<{ game: string }> = ({ game }) => {
@@ -14,14 +22,10 @@ const Page: FunctionalComponent<{ game: string }> = ({ game }) => {
     return <>
         {metadata.backgroundImage ? <div className="h-96 flex items-center bg-cover bg-center" style={{backgroundImage: `url(${metadata.backgroundImage})`}}>
             <div className="backdrop-blur-sm w-full bg-black/10">
-                <div className="container px-4 py-16 flex items-center">
-                    <h2 className="text-4xl font-extrabold">{metadata.name}</h2>
-                </div>
+                <GameHeader {...metadata} />
             </div>
         </div> : <div className="bg-slate-800">
-            <div className="container px-4 py-16 flex items-center">
-                <h2 className="text-4xl font-extrabold">{metadata.name}</h2>
-            </div>
+            <GameHeader {...metadata} />
         </div>}
     </>
 };
