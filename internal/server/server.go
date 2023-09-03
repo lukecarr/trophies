@@ -1,15 +1,18 @@
 package server
 
 import (
+	"bytes"
 	"github.com/julienschmidt/httprouter"
 	"github.com/lukecarr/trophies/frontend"
 	sql "github.com/lukecarr/trophies/internal/db"
 	"github.com/lukecarr/trophies/internal/env"
 	"github.com/lukecarr/trophies/internal/routes"
+	"io"
 	"io/fs"
 	"log"
 	"net/http"
 	"os"
+	"time"
 )
 
 type Server struct {
@@ -43,12 +46,6 @@ func New(dsn, npsso, rawg string) *Server {
 
 	router := httprouter.New()
 
-	frontendFS, err := fs.Sub(frontend.Static, "dist")
-	if err != nil {
-		panic(err)
-	}
-	router.NotFound = http.FileServer(http.FS(frontendFS))
-
 	srv := &Server{
 		Router: router,
 		Env:    env.New(),
@@ -58,6 +55,35 @@ func New(dsn, npsso, rawg string) *Server {
 	srv.Router.GET("/api/version", routes.Version())
 	routes.Game(srv.Env, srv.Router)
 	routes.Metadata(srv.Env, srv.Router)
+
+	frontendFS, err := fs.Sub(frontend.Static, "dist")
+	if err != nil {
+		panic(err)
+	}
+	fsServer := http.FileServer(http.FS(frontendFS))
+
+	// Read index.html into memory
+	indexFile, err := frontendFS.Open("index.html")
+	if err != nil {
+		panic(err)
+	}
+	indexContent, err := io.ReadAll(indexFile)
+	if err != nil {
+		panic(err)
+	}
+	indexFile.Close()
+
+	router.NotFound = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		f, err := frontendFS.Open(r.URL.Path[1:])
+
+		if err == nil {
+			f.Close()
+			fsServer.ServeHTTP(w, r)
+			return
+		}
+
+		http.ServeContent(w, r, "index.html", time.Time{}, bytes.NewReader(indexContent))
+	})
 
 	return srv
 }
