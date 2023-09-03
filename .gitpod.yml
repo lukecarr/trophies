@@ -2,6 +2,7 @@ image: gitpod/workspace-full
 
 tasks:
   - name: Run application
+    before: go install github.com/mitranim/gow@latest
     init: go mod download && cd frontend && pnpm install --frozen-lockfile
     command: make run
     env:
