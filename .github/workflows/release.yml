@@ -32,7 +32,7 @@ jobs:
           bun-version: '0.8'
 
       - name: Install frontend dependencies
-        run: bun --cwd frontend install --frozen-lockfile
+        run: bun install --cwd frontend --frozen-lockfile
 
       - name: Build frontend
         run: bun run --cwd frontend build
