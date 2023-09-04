@@ -49,6 +49,8 @@ COPY --from=backend-builder /etc/group /etc/group
 
 COPY --from=backend-builder /usr/bin/trophies /usr/bin/trophies
 
+ENV DSN=/data/trophies.db
+
 EXPOSE 3000
 
 USER trophies

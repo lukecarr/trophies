@@ -9,37 +9,52 @@
 
 > ⚠️ This project is currently pre-alpha and should be considered a WIP: breaking changes are to be expected frequently, and most functionality is missing/partially implemented!
 
-Trophies.gg is a lightweight, self-hosted trophy tracker for PSN. The entire web app (including the backend, frontend, and persistent storage/database) is published as a single zero-dependency executable!
+Trophies.gg is a lightweight, self-hosted trophy tracker for PSN. The entire web app (including the backend, frontend, and persistent storage/database) is published as a single zero-dependency Docker image!
 
 ![image](https://github.com/lukecarr/trophies/assets/24438483/20e5ae31-8d3c-45e6-8f6c-15e973811e8f)
 
 ## Installation
 
-As mentioned, Trophies.gg is a single zero-dependency executable, so installation is as simple as downloading the latest binary from the project's [GitHub releases][releases] page for your system of choice.
+Trophies.gg is distributed as a Docker image. The steps involve performing SQL migrations (this needs to happen on a fresh install or when upgrading to a new version), fetching data from PSN, and then starting the server:
 
-### Docker
+```shell
+# Pull the Trophies.gg Docker image
+$ docker pull ghcr.io/lukecarr/trophies
 
-We also publish a Docker image that serves as a wrapper for the Trophies.gg binary.
+# Setup an environment variable pointing to where your Trophies.gg database will persist
+$ export DATABASE_PATH=/path/to/your/folder
 
+# Perform migrations
+$ docker run -it -v $DATABASE_PATH:/data ghcr.io/lukecarr/trophies migrate
+
+# Obtain an NPSSO token (see README section) from PSN
+$ export NPSSO=<your NPSSO token>
+
+# Fetch data from PSN
+$ docker run -it -e NPSSO=$NPSSO -v $DATABASE_PATH:/data ghcr.io/lukecarr/trophies fetch
+
+# Obtain a RAWG API key (if you want game metadata, background images, etc.)
+$ export RAWG_API_KEY=<your API key>
+
+# Launch the server on port 3000 (-p 3000:3000) in detached mode (-d)
+$ docker run -d -e NPSSO=$NPSSO -e RAWG_API_KEY=$RAWG_API_KEY -v $DATABASE_PATH:/data ghcr.io/lukecarr/trophies
 ```
-docker run -d -p 3000:3000 ghcr.io/lukecarr/trophies:latest
-```
 
-You can find a comprehensive list of Docker image tags [here][docker-images].
+> You can find a comprehensive list of Docker image tags [here][docker-images].
 
 ### Examples
 
-In the [examples](/examples) directory, you can find different scenarios for deploying/using Trophies.gg.
+In the [examples](/examples) directory, you can find different scenarios for deploying Trophies.gg.
 
 ## Usage
 
-The `trophies` binary is actually a CLI application that can perform many different operations (including running the all-in-one web server).
+The `trophies` binary (the Docker image entrypoint) is actually a CLI application that can perform many different operations (including running the all-in-one web server).
 
 ### `serve`
 
 The `trophies serve` subcommand starts the Trophies.gg server. This is a combined server that includes both the backend and web-based frontend.
 
-> When running this command, you might see a warning about "Launching in in-memory mode". Please check the README section on [Data persistence](#data-persistence) for further details.
+**This subcommand is the default Dockerfile command.**
 
 ### `migrate`
 
@@ -47,41 +62,11 @@ The `trophies migrate` subcommand performs SQL migrations. This command needs to
 
 ### `fetch`
 
-This `trophies fetch` subcommand loads games, trophy lists, and trophy completion data from PSN into your local SQLite database.
-
-## Data persistence
-
-**By default, Trophies.gg launches in an "in-memory mode", where data does not persist across restarts.**
-
-You should set the `DSN` environment variable to the path of an SQLite `.db` file (it will be automatically created if missing) so Trophies.gg can store persistent data.
-
-### Warning message
-
-To ensure that you're aware of the data persistence behaviour, a warning message will be logged on startup if you haven't set the `DSN` environment variable:
-
-```txt
-WARNING: Launching in in-memory mode as 'DSN' environment variable wasn't set. Data will be lost on shutdown!
-```
+This `trophies fetch` subcommand loads games, trophy lists, and trophy completion data from PSN.
 
 ## Environment variables
 
 Trophies.gg uses environment variables to configure the application. Below, you can find details on the different environment variables that Trophies.gg looks for and what they are used to configure.
-
-### `ADDR`
-
-Indicates the address (and port) that Trophies.gg will listen on when calling `serve`.
-
-The default address value is `:3000`.
-
-### `DSN`
-
-The connection string (or, more simply, path) of the SQLite database instance used to persist data.
-
-If this variable isn't set, Trophies.gg will launch in "in-memory mode", and data will not persist across restarts.
-
-### `DISABLE_IN_MEMORY_WARN`
-
-Setting this variable to any value will disable the in-memory database warning message on startup.
 
 ### `NPSSO`
 
@@ -119,10 +104,6 @@ Once you've obtained an API key, include it as an environment variable and enjoy
 ### Individual game page
 
 ![image](https://github.com/lukecarr/trophies/assets/24438483/6e0444cc-4c87-4706-8809-fd7b2b2010a2)
-
-## Credits
-
-
 
 ## Versioning
 
