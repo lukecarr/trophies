@@ -6,6 +6,8 @@ services:
     restart: unless-stopped
     expose:
       - '3000'
+    volumes:
+      - trophies_data:/data
   caddy:
     image: caddy:latest
     restart: unless-stopped
@@ -18,5 +20,6 @@ services:
     command: caddy reverse-proxy --from ${DOMAIN} --to trophies:3000
 
 volumes:
+  trophies_data: {}
   caddy_data: {}
   caddy_config: {}
