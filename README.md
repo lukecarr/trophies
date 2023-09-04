@@ -95,6 +95,12 @@ Using the link above, you can sign up for a free account and obtain an API key l
 
 Once you've obtained an API key, include it as an environment variable and enjoy beautiful game art and extra metadata!
 
+### `DISABLE_NEW_VERSION_CHECK`
+
+By default, Trophies.gg will make a request to GitHub's API on startup to check for new releases.
+
+If you wish to disable this logic, please set the `DISABLE_NEW_VERSION_CHECK` variable to any value.
+
 ## Screenshots
 
 ### Homepage (all games)
