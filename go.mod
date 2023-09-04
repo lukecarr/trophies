@@ -4,7 +4,6 @@ go 1.20
 
 require (
 	github.com/julienschmidt/httprouter v1.3.0
-	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/rubenv/sql-migrate v1.5.2
 	github.com/spf13/cobra v1.7.0
 	modernc.org/sqlite v1.25.0
