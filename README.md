@@ -5,6 +5,7 @@
 [![GitHub](https://img.shields.io/github/license/lukecarr/trophies)](LICENSE)
 [![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability/lukecarr/trophies)][codeclimate]
 [![Matrix](https://img.shields.io/matrix/trophies%3Amatrix.org)][matrix]
+[![Open in Gitpod](https://img.shields.io/badge/open_in-gitpod-FFAE33?logo=gitpod)][gitpod]
 
 > ⚠️ This project is currently pre-alpha and should be considered a WIP: breaking changes are to be expected frequently, and most functionality is missing/partially implemented!
 
@@ -134,6 +135,7 @@ Trophies.gg is distributed under the [Apache 2.0](LICENSE) license.
 [release]: https://github.com/lukecarr/trophies/releases/latest
 [codeclimate]: https://codeclimate.com/github/lukecarr/trophies
 [matrix]: https://matrix.to/#/#trophies:matrix.org
+[gitpod]: https//gitpod.io/#https://github.com/lukecarr/trophies
 [releases]: https://github.com/lukecarr/trophies/releases
 [docker-images]: https://github.com/lukecarr/trophies/pkgs/container/trophies/versions
 [PlayStation]: https://www.playstation.com/
