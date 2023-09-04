@@ -5,15 +5,15 @@ GO_MAIN=main.go
 GO_FLAGS=-ldflags '-w -s'
 NODE_ENV=production
 
-# Format frontend using dprint
-fmt-frontend:
-	bun run --cwd $(FRONTEND_DIR) fmt
+# Format using dprint
+fmt-dprint:
+	dprint fmt
 
-# Format backend using gofmt
-fmt-backend:
+# Format using gofmt
+fmt-go:
 	gofmt -w .
 
-fmt: fmt-frontend fmt-backend
+fmt: fmt-dprint fmt-go
 
 # Build frontend
 build-frontend:

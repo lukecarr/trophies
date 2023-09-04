@@ -4,9 +4,9 @@
 
 The following table describes the versions of Trophies.gg that are currently supported with security updates.
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 0.1.0-alpha.x | :x:                |
+| Version       | Supported |
+| ------------- | --------- |
+| 0.1.0-alpha.x | :x:       |
 
 ## Responsible Disclosure Security Policy
 

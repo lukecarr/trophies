@@ -2,8 +2,15 @@ image: gitpod/workspace-full
 
 tasks:
   - name: Run application
-    before: go install github.com/mitranim/gow@latest && curl -fsSL https://bun.sh/install | bash && source /home/gitpod/.bashrc
-    init: go mod download && bun install --cwd frontend --frozen-lockfile
+    before: >
+      go install github.com/mitranim/gow@latest &&
+      curl -fsSL https://bun.sh/install | bash &&
+      curl -fsSL https://dprint.dev/install.sh | sh &&
+      export PATH="/home/gitpod/.dprint/bin:$PATH" &&
+      source /home/gitpod/.bashrc
+    init: >
+      go mod download && 
+      bun install --cwd frontend --frozen-lockfile
     command: make run
     env:
       DSN: /workspace/trophies/trophies.db

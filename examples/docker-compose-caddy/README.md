@@ -4,8 +4,8 @@
 
 ## Requirements
 
-* Docker 1.13.0+
-* The `DOMAIN` environment variable set to the FQDN that you'd like to access Trophies.gg at.
+- Docker 1.13.0+
+- The `DOMAIN` environment variable set to the FQDN that you'd like to access Trophies.gg at.
 
 ## Getting Started
 
