@@ -13,38 +13,6 @@ permissions:
   packages: write
 
 jobs:
-  goreleaser:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Set up Go
-        uses: actions/setup-go@v4
-        with:
-          go-version: '1.21'
-
-      - name: Set up Bun
-        uses: oven-sh/setup-bun@v1
-        with:
-          bun-version: '0.8'
-
-      - name: Install frontend dependencies
-        run: bun install --cwd frontend --frozen-lockfile
-
-      - name: Build frontend
-        run: bun run --cwd frontend build
-
-      - name: Run GoReleaser
-        uses: goreleaser/goreleaser-action@v4
-        with:
-          version: latest
-          args: release --clean
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
   docker:
     runs-on: ubuntu-latest
 

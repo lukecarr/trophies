@@ -1,0 +1,20 @@
+name: Format
+
+on: [push, pull_request]
+
+jobs:
+  fmt:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install dprint
+        shell: bash
+        run: curl -fsSL https://dprint.dev/install.sh | sh
+
+      - name: Check formatting
+        shell: bash
+        run: ~/.dprint/bin/dprint check
+        working-directory: frontend
