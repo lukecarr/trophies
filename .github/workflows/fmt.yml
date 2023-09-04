@@ -17,4 +17,3 @@ jobs:
       - name: Check formatting
         shell: bash
         run: ~/.dprint/bin/dprint check
-        working-directory: frontend
