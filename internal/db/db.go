@@ -1,24 +1,24 @@
 package db
 
 import (
-	"github.com/jmoiron/sqlx"
+	"database/sql"
 )
 
 const DIALECT = "sqlite3"
 const MEMORY_DSN = ":memory:?cache=shared"
 
 type DB struct {
-	Sqlx *sqlx.DB
+	Sql *sql.DB
 }
 
 func New(dsn string) (*DB, error) {
-	conn, err := sqlx.Connect(DIALECT, dsn)
+	conn, err := sql.Open(DIALECT, dsn)
 
 	if err != nil {
 		return nil, err
 	}
 
 	return &DB{
-		Sqlx: conn,
+		Sql: conn,
 	}, nil
 }

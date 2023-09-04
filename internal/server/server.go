@@ -35,7 +35,7 @@ func New(dsn, npsso, rawg string) *Server {
 			log.Println("WARNING: Launching in in-memory mode as 'DSN' environment variable wasn't set. Data will be lost on shutdown!")
 		}
 
-		n, migrateErr := sql.Migrate(db.Sqlx.DB)
+		n, migrateErr := sql.Migrate(db.Sql)
 
 		if err != nil {
 			log.Fatalln("Failed to perform migrations on in-memory database", migrateErr)

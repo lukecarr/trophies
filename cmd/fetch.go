@@ -33,14 +33,14 @@ func MakeFetchCmd() *cobra.Command {
 			psn := services.NewPsnClient(npsso)
 			titles, _ := psn.GetTitles()
 
-			tx, err := conn.Sqlx.Beginx()
+			tx, err := conn.Sql.Begin()
 			if err != nil {
 				log.Fatalln("Failed to begin transaction for loading games:", err)
 			}
 
 			query := `
 				INSERT INTO game (name, iconURL, description, psnID, psnServiceName, platform)
-				VALUES (:name, :iconURL, :description, :psnID, :psnServiceName, :platform)
+				VALUES ($1, $2, $3, $4, $5, $6)
 				ON CONFLICT(psnID) DO UPDATE SET
 				name = excluded.name,
 				iconURL = excluded.iconURL,
@@ -48,34 +48,39 @@ func MakeFetchCmd() *cobra.Command {
 				psnServiceName = excluded.psnServiceName,
 				platform = excluded.platform
 			`
-			_, err = tx.NamedExec(query, titles)
 
-			if err != nil {
-				_ = tx.Rollback()
-				log.Fatalln("Failed to load titles:", err)
+			for _, title := range titles {
+				_, err = tx.Exec(query, title.Name, title.IconURL, title.Description, title.ID, title.ServiceName, title.Platform)
+
+				if err != nil {
+					_ = tx.Rollback()
+					log.Fatalln("Failed to load games:", err)
+				}
 			}
 
 			allTrophyGroups := getTrophyGroups(titles, psn)
 
 			trophyGroupQuery := `
 				INSERT INTO trophyGroup (name, iconURL, gameID, psnID)
-				VALUES (:name, :iconURL, (SELECT id FROM game WHERE psnID = :psnGameID), :psnID)
+				VALUES ($1, $2, (SELECT id FROM game WHERE psnID = $3), $4)
 				ON CONFLICT(gameID, psnID) DO UPDATE SET
 				name = excluded.name,
 				iconURL = excluded.iconURL
 			`
 
-			_, err = tx.NamedExec(trophyGroupQuery, allTrophyGroups)
-			if err != nil {
-				_ = tx.Rollback()
-				log.Fatalln("Failed to load trophy groups:", err)
+			for _, trophyGroup := range allTrophyGroups {
+				_, err = tx.Exec(trophyGroupQuery, trophyGroup.Name, trophyGroup.IconURL, trophyGroup.GameID, trophyGroup.ID)
+				if err != nil {
+					_ = tx.Rollback()
+					log.Fatalln("Failed to load trophy groups:", err)
+				}
 			}
 
 			allTrophies := getTrophies(titles, psn)
 
 			trophyQuery := `
 				INSERT INTO trophy (name, description, rarity, hidden, iconURL, gameID, psnID, trophyGroupID)
-				VALUES (:name, :description, :rarity, :hidden,  :iconURL, (SELECT id FROM game WHERE psnID = :psnGameID), :psnID, (SELECT id FROM trophyGroup WHERE psnID = :trophyGroupID))
+				VALUES ($1, $2, $3, $4, $5, (SELECT id FROM game WHERE psnID = $6), $7, (SELECT id FROM trophyGroup WHERE psnID = $8))
 				ON CONFLICT(gameID, psnID) DO UPDATE SET
 				name = excluded.name,
 				description = excluded.description,
@@ -84,14 +89,8 @@ func MakeFetchCmd() *cobra.Command {
 				iconURL = excluded.iconURL
 			`
 
-			batchSize := 125
-			for i := 0; i < len(allTrophies); i += batchSize {
-				end := i + batchSize
-				if end > len(allTrophies) {
-					end = len(allTrophies)
-				}
-				batch := allTrophies[i:end]
-				_, err = tx.NamedExec(trophyQuery, batch)
+			for _, trophy := range allTrophies {
+				_, err = tx.Exec(trophyQuery, trophy.Name, trophy.Description, trophy.Rarity, trophy.Hidden, trophy.IconURL, trophy.GameID, trophy.ID, trophy.TrophyGroupID)
 				if err != nil {
 					_ = tx.Rollback()
 					log.Fatalln("Failed to load trophies:", err)

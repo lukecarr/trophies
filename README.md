@@ -119,6 +119,10 @@ Once you've obtained an API key, include it as an environment variable and enjoy
 
 ![image](https://github.com/lukecarr/trophies/assets/24438483/6e0444cc-4c87-4706-8809-fd7b2b2010a2)
 
+## Credits
+
+
+
 ## Versioning
 
 Trophies.gg uses [Semantic Versioning v2.0.0][semver].

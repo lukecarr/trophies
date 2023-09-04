@@ -25,7 +25,7 @@ func New() *Env {
 
 func NewServices(db *db.DB, rawgApiKey string) *Services {
 	return &Services{
-		Game:     services.GameServiceSql{Sqlx: db.Sqlx},
+		Game:     services.GameServiceSql{Sql: db.Sql},
 		Metadata: &services.MetadataServiceRawg{ApiKey: rawgApiKey},
 	}
 }

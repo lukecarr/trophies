@@ -17,12 +17,12 @@ type GetTitlesResponse struct {
 }
 
 type Title struct {
-	ID          string `json:"npCommunicationId" db:"psnID"`
-	ServiceName string `json:"npServiceName" db:"psnServiceName"`
-	Name        string `json:"trophyTitleName" db:"name"`
-	Description string `json:"trophyTitleDetail" db:"description"`
-	IconURL     string `json:"trophyTitleIconUrl" db:"iconURL"`
-	Platform    string `json:"trophyTitlePlatform" db:"platform"`
+	ID          string `json:"npCommunicationId"`
+	ServiceName string `json:"npServiceName"`
+	Name        string `json:"trophyTitleName"`
+	Description string `json:"trophyTitleDetail"`
+	IconURL     string `json:"trophyTitleIconUrl"`
+	Platform    string `json:"trophyTitlePlatform"`
 }
 
 type GetTrophyGroupsResponse struct {
@@ -30,9 +30,9 @@ type GetTrophyGroupsResponse struct {
 }
 
 type TrophyGroup struct {
-	ID      string `json:"trophyGroupId" db:"psnID"`
-	Name    string `json:"trophyGroupName" db:"name"`
-	IconURL string `json:"trophyGroupIconUrl" db:"iconURL"`
+	ID      string `json:"trophyGroupId"`
+	Name    string `json:"trophyGroupName"`
+	IconURL string `json:"trophyGroupIconUrl"`
 }
 
 type GetTrophiesResponse struct {
@@ -40,12 +40,12 @@ type GetTrophiesResponse struct {
 }
 
 type Trophy struct {
-	ID          uint   `json:"trophyID" db:"psnID"`
-	Hidden      bool   `json:"trophyHidden" db:"hidden"`
-	Rarity      string `json:"trophyType" db:"rarity"`
-	Name        string `json:"trophyName" db:"name"`
-	Description string `json:"trophyDetail" db:"description"`
-	IconURL     string `json:"trophyIconUrl" db:"iconURL"`
+	ID          uint   `json:"trophyID"`
+	Hidden      bool   `json:"trophyHidden"`
+	Rarity      string `json:"trophyType"`
+	Name        string `json:"trophyName"`
+	Description string `json:"trophyDetail"`
+	IconURL     string `json:"trophyIconUrl"`
 	GroupID     string `json:"trophyGroupId"`
 }
 
