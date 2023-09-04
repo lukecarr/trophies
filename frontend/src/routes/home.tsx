@@ -119,7 +119,7 @@ const GameRow = ({ game, counts }: { game: Game; counts: Omit<GameCount, "id">[]
 
 const Home: FunctionalComponent = () => {
   const { data } = useSWR<Game[]>("/games");
-  const { data: counts } = useSWR<GameCount[]>("/games/counts");
+  const { data: counts } = useSWR<GameCount[]>("/gamesCounts");
 
   if (!data || !counts) return <p>Loading...</p>;
 

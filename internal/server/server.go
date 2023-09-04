@@ -48,13 +48,12 @@ func New(dsn, npsso, rawg string) *Server {
 
 	srv := &Server{
 		Router: router,
-		Env:    env.New(),
+		Env:    env.New(db),
 	}
 	srv.Env.Services = env.NewServices(db, rawg)
 
 	srv.Router.GET("/api/version", routes.Version())
 	routes.Game(srv.Env, srv.Router)
-	routes.Metadata(srv.Env, srv.Router)
 
 	frontendFS, err := fs.Sub(frontend.Static, "dist")
 	if err != nil {

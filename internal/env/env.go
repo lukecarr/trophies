@@ -3,8 +3,6 @@ package env
 import (
 	"github.com/lukecarr/trophies/internal/db"
 	"github.com/lukecarr/trophies/internal/services"
-	"github.com/patrickmn/go-cache"
-	"time"
 )
 
 type Services struct {
@@ -13,13 +11,13 @@ type Services struct {
 }
 
 type Env struct {
+	DB       *db.DB
 	Services *Services
-	Cache    *cache.Cache
 }
 
-func New() *Env {
+func New(db *db.DB) *Env {
 	return &Env{
-		Cache: cache.New(24*7*time.Hour, 1*time.Hour),
+		DB: db,
 	}
 }
 

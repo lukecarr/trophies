@@ -29,14 +29,17 @@ const GetQuery = `
 		description,
 		iconURL,
 		platform,
-		psnServiceName
+		psnServiceName,
+		backgroundImageURL,
+		metacriticScore,
+		releaseDate
 	FROM game
 	WHERE id = $1
 `
 
 func (s GameServiceSql) Get(id int) (*models.Game, error) {
 	game := &models.Game{}
-	err := s.Sql.QueryRow(GetQuery, id).Scan(&game.ID, &game.PsnID, &game.Name, &game.Description, &game.IconURL, &game.Platform, &game.PsnServiceName)
+	err := s.Sql.QueryRow(GetQuery, id).Scan(&game.ID, &game.PsnID, &game.Name, &game.Description, &game.IconURL, &game.Platform, &game.PsnServiceName, &game.BackgroundImageURL, &game.MetacriticScore, &game.ReleaseDate)
 
 	return game, err
 }
@@ -49,7 +52,10 @@ const GetAllQuery = `
 		description,
 		iconURL,
 		platform,
-		psnServiceName
+		psnServiceName,
+		backgroundImageURL,
+		metacriticScore,
+		releaseDate
 	FROM game
 `
 
@@ -64,7 +70,7 @@ func (s GameServiceSql) GetAll() ([]*models.Game, error) {
 
 	for rows.Next() {
 		game := &models.Game{}
-		err := rows.Scan(&game.ID, &game.PsnID, &game.Name, &game.Description, &game.IconURL, &game.Platform, &game.PsnServiceName)
+		err := rows.Scan(&game.ID, &game.PsnID, &game.Name, &game.Description, &game.IconURL, &game.Platform, &game.PsnServiceName, &game.BackgroundImageURL, &game.MetacriticScore, &game.ReleaseDate)
 		if err != nil {
 			return nil, err
 		}
