@@ -1,17 +1,19 @@
-import type { FunctionalComponent, JSX } from 'preact'
+import type { FunctionalComponent, JSX } from "preact";
 
 type Props = {
-    newTab?: boolean
-}
+  newTab?: boolean;
+};
 
 const Link: FunctionalComponent<JSX.HTMLAttributes<HTMLAnchorElement> & Props> = ({ newTab, children, ...props }) => {
-    return <a
-        className="font-semibold underline decoration-dotted hover:decoration-solid"
-        {...(newTab && { target: '_blank', rel: 'noopener' })}
-        {...props}
+  return (
+    <a
+      className="font-semibold underline decoration-dotted hover:decoration-solid"
+      {...(newTab && { target: "_blank", rel: "noopener" })}
+      {...props}
     >
-        {children}
-    </a>;
+      {children}
+    </a>
+  );
 };
 
 export default Link;

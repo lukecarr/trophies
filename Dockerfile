@@ -1,14 +1,12 @@
-FROM node:20 AS node-builder
-
-RUN npm i -g pnpm@8.7.0
+FROM oven/bun:0.8 AS frontend-builder
 
 WORKDIR /build
 COPY ./frontend ./
 
-RUN pnpm install --frozen-lockfile
-RUN pnpm build
+RUN bun install --frozen-lockfile
+RUN bun run build
 
-FROM golang:1.21-alpine AS go-builder
+FROM golang:1.21-alpine AS backend-builder
 
 RUN apk update && apk add --no-cache git ca-certificates tzdata && update-ca-certificates
 
@@ -32,7 +30,7 @@ RUN go mod download
 RUN go mod verify
 
 COPY . .
-COPY --from=node-builder /build/dist ./frontend/dist/
+COPY --from=frontend-builder /build/dist ./frontend/dist/
 
 ENV CGO_ENABLED=0
 ENV GOOS=linux
@@ -44,12 +42,12 @@ RUN go build -ldflags="-w -s -extldflags '-static' -X github.com/lukecarr/trophi
 
 FROM scratch
 
-COPY --from=go-builder /usr/share/zoneinfo /usr/share/zoneinfo
-COPY --from=go-builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
-COPY --from=go-builder /etc/passwd /etc/passwd
-COPY --from=go-builder /etc/group /etc/group
+COPY --from=backend-builder /usr/share/zoneinfo /usr/share/zoneinfo
+COPY --from=backend-builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
+COPY --from=backend-builder /etc/passwd /etc/passwd
+COPY --from=backend-builder /etc/group /etc/group
 
-COPY --from=go-builder /usr/bin/trophies /usr/bin/trophies
+COPY --from=backend-builder /usr/bin/trophies /usr/bin/trophies
 
 EXPOSE 3000
 

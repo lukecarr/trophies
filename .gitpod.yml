@@ -2,8 +2,8 @@ image: gitpod/workspace-full
 
 tasks:
   - name: Run application
-    before: go install github.com/mitranim/gow@latest
-    init: go mod download && cd frontend && pnpm install --frozen-lockfile
+    before: go install github.com/mitranim/gow@latest && curl -fsSL https://bun.sh/install | bash
+    init: go mod download && bun --cwd frontend install --frozen-lockfile
     command: make run
     env:
       DSN: /workspace/trophies/trophies.db

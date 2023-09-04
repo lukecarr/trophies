@@ -5,9 +5,19 @@ GO_MAIN=main.go
 GO_FLAGS=-ldflags '-w -s'
 NODE_ENV=production
 
+# Format frontend using dprint
+fmt-frontend:
+	bun run --cwd $(FRONTEND_DIR) fmt
+
+# Format backend using gofmt
+fmt-backend:
+	gofmt -w .
+
+fmt: fmt-frontend fmt-backend
+
 # Build frontend
 build-frontend:
-	NODE_ENV=$(NODE_ENV) pnpm --dir $(FRONTEND_DIR) build
+	NODE_ENV=$(NODE_ENV) bun run --cwd $(FRONTEND_DIR) build
 
 # Build backend
 build-backend:
@@ -30,7 +40,7 @@ run-prod: build-frontend build-backend
 	./$(BACKEND_BIN) serve
 
 watch-frontend:
-	pnpm --dir $(FRONTEND_DIR) watch
+	bun run --cwd $(FRONTEND_DIR) watch
 
 watch-backend:
 	gow -c -e=go,mod,ts,tsx,css run . serve

@@ -1,0 +1,13 @@
+{
+  "typescript": {},
+  "json": {},
+  "dockerfile": {},
+  "excludes": [
+    "**/node_modules"
+  ],
+  "plugins": [
+    "https://plugins.dprint.dev/typescript-0.87.1.wasm",
+    "https://plugins.dprint.dev/json-0.17.4.wasm",
+    "https://plugins.dprint.dev/dockerfile-0.3.0.wasm"
+  ]
+}
