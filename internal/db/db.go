@@ -5,7 +5,7 @@ import (
 )
 
 const DIALECT = "sqlite3"
-const MEMORY_DSN = ":memory:?cache=shared"
+const MemoryDsn = ":memory:?cache=shared"
 
 type DB struct {
 	Sql *sql.DB

@@ -8,7 +8,7 @@ RUN bun run build
 
 FROM golang:1.21-alpine AS backend-builder
 
-RUN apk update && apk add --no-cache git ca-certificates tzdata && update-ca-certificates
+RUN apk update && apk add --no-cache git ca-certificates tzdata build-base && update-ca-certificates
 
 ENV USER=trophies
 ENV UID=10001
@@ -32,7 +32,7 @@ RUN go mod verify
 COPY . .
 COPY --from=frontend-builder /build/dist ./frontend/dist/
 
-ENV CGO_ENABLED=0
+ENV CGO_ENABLED=1
 ENV GOOS=linux
 ENV GOARCH=amd64
 ARG BUILD_VERSION

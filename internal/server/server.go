@@ -30,7 +30,7 @@ func New(dsn, npsso, rawg string) *Server {
 	}
 
 	// In-memory mode
-	if dsn == sql.MEMORY_DSN {
+	if dsn == sql.MemoryDsn {
 		if _, ok := os.LookupEnv("DISABLE_IN_MEMORY_WARN"); !ok {
 			log.Println("WARNING: Launching in in-memory mode as 'DSN' environment variable wasn't set. Data will be lost on shutdown!")
 		}

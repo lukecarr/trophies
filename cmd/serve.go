@@ -18,7 +18,7 @@ func MakeServeCmd() *cobra.Command {
 				log.Fatalln("You must set the NPSSO environment variable")
 			}
 
-			dsn := db.MEMORY_DSN
+			dsn := db.MemoryDsn
 			if val, ok := os.LookupEnv("DSN"); ok {
 				dsn = val
 			}

@@ -14,7 +14,7 @@ func MakeMigrateCmd() *cobra.Command {
 		Use:   "migrate",
 		Short: "Performs database migrations (run after installation/upgrade)",
 		Run: func(cmd *cobra.Command, args []string) {
-			dsn := db.MEMORY_DSN
+			dsn := db.MemoryDsn
 			if val, ok := os.LookupEnv("DSN"); ok {
 				dsn = val
 			}
