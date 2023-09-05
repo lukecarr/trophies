@@ -1,17 +1,15 @@
 # 🏆 Trophies.gg
 
+> ⚠️ This project is currently pre-alpha and should be considered a WIP: breaking changes are to be expected frequently, and most functionality is missing/partially implemented!
+
+Trophies.gg is a lightweight, self-hosted trophy tracker for PSN. The entire web app (including the backend, frontend, and persistent storage/database) is published as a single zero-dependency Docker image!
+
 [![GitHub release (with filter)](https://img.shields.io/github/v/release/lukecarr/trophies)][release]
 [![Docker image size](https://ghcr-badge.egpl.dev/lukecarr/trophies/size)][docker-images]
 [![GitHub](https://img.shields.io/github/license/lukecarr/trophies)](LICENSE)
 [![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability/lukecarr/trophies)][codeclimate]
 [![Matrix](https://img.shields.io/matrix/trophies%3Amatrix.org)][matrix]
 [![Open in Gitpod](https://img.shields.io/badge/open_in-gitpod-FFAE33?logo=gitpod)][gitpod]
-
-> ⚠️ This project is currently pre-alpha and should be considered a WIP: breaking changes are to be expected frequently, and most functionality is missing/partially implemented!
-
-Trophies.gg is a lightweight, self-hosted trophy tracker for PSN. The entire web app (including the backend, frontend, and persistent storage/database) is published as a single zero-dependency Docker image!
-
-![image](https://github.com/lukecarr/trophies/assets/24438483/20e5ae31-8d3c-45e6-8f6c-15e973811e8f)
 
 ## Installation
 
@@ -75,7 +73,7 @@ This is your PSN NPSSO token which is used to interact with the PSN API and fetc
 Your NPSSO token can be obtained by following these steps:
 
 1. Visit the [PlayStation website][PlayStation] and sign in with your PSN account.
-1. In the same browser session, access [this page][npsso] to obtain your NPSSO token.
+1. Cccess [this page][npsso] in the same browser session to obtain your NPSSO token.
 
 The NPSSO token should return a response that looks like this:
 
@@ -89,9 +87,9 @@ Copy the token value (not including the quote characters) and use this as the va
 
 The [RAWG API][rawg] is used by Trophies.gg to obtain accompanying game metadata, including background images, Metacritic scores, and genre information.
 
-Using the link above, you can sign up for a free account and obtain an API key limited to 20K monthly requests.
+You can sign up for a free account using the link above and obtain an API key limited to 20K monthly requests.
 
-> Trophies.gg caches results from the RAWG API in an effort to reduce API consumption (and keep you within their free tier limits).
+> Trophies.gg caches results from the RAWG API to reduce API consumption (and keep you within their free tier limits).
 
 Once you've obtained an API key, include it as an environment variable and enjoy beautiful game art and extra metadata!
 
