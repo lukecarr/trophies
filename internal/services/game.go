@@ -2,6 +2,7 @@ package services
 
 import (
 	"database/sql"
+	"errors"
 	"github.com/lukecarr/trophies/internal/models"
 )
 
@@ -13,6 +14,7 @@ type GameTrophyCounts struct {
 
 type GameService interface {
 	Get(id int) (*models.Game, error)
+	GetMetadata(id int) (*models.GameMetadata, error)
 	GetAll() ([]*models.Game, error)
 	GetCounts() ([]*GameTrophyCounts, error)
 }
@@ -29,19 +31,36 @@ const GetQuery = `
 		description,
 		iconURL,
 		platform,
-		psnServiceName,
-		backgroundImageURL,
-		metacriticScore,
-		releaseDate
+		psnServiceName
 	FROM game
 	WHERE id = $1
 `
 
 func (s GameServiceSql) Get(id int) (*models.Game, error) {
 	game := &models.Game{}
-	err := s.Sql.QueryRow(GetQuery, id).Scan(&game.ID, &game.PsnID, &game.Name, &game.Description, &game.IconURL, &game.Platform, &game.PsnServiceName, &game.BackgroundImageURL, &game.MetacriticScore, &game.ReleaseDate)
+	err := s.Sql.QueryRow(GetQuery, id).Scan(&game.ID, &game.PsnID, &game.Name, &game.Description, &game.IconURL, &game.Platform, &game.PsnServiceName)
 
 	return game, err
+}
+
+const GetMetadataQuery = `
+	SELECT
+		backgroundImageURL,
+		metacriticScore,
+		releaseDate
+	FROM gameMetadata
+	WHERE gameID = $1
+`
+
+func (s GameServiceSql) GetMetadata(id int) (*models.GameMetadata, error) {
+	metadata := &models.GameMetadata{}
+	err := s.Sql.QueryRow(GetMetadataQuery, id).Scan(&metadata.BackgroundImageURL, &metadata.MetacriticScore, &metadata.ReleaseDate)
+
+	if errors.Is(err, sql.ErrNoRows) {
+		return nil, nil
+	}
+
+	return metadata, err
 }
 
 const GetAllQuery = `
@@ -52,10 +71,7 @@ const GetAllQuery = `
 		description,
 		iconURL,
 		platform,
-		psnServiceName,
-		backgroundImageURL,
-		metacriticScore,
-		releaseDate
+		psnServiceName
 	FROM game
 `
 
@@ -70,7 +86,7 @@ func (s GameServiceSql) GetAll() ([]*models.Game, error) {
 
 	for rows.Next() {
 		game := &models.Game{}
-		err := rows.Scan(&game.ID, &game.PsnID, &game.Name, &game.Description, &game.IconURL, &game.Platform, &game.PsnServiceName, &game.BackgroundImageURL, &game.MetacriticScore, &game.ReleaseDate)
+		err := rows.Scan(&game.ID, &game.PsnID, &game.Name, &game.Description, &game.IconURL, &game.Platform, &game.PsnServiceName)
 		if err != nil {
 			return nil, err
 		}

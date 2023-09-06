@@ -14,6 +14,7 @@ import (
 func Game(e *env.Env, h *httprouter.Router) {
 	h.GET("/api/games", getAllGames(e))
 	h.GET("/api/games/:id", getGame(e))
+	h.GET("/api/games/:id/metadata", getGameMetadata(e))
 	h.GET("/api/gamesCounts", getAllGameTrophyCounts(e))
 }
 
@@ -78,30 +79,62 @@ func getGame(e *env.Env) func(w http.ResponseWriter, r *http.Request, _ httprout
 			return
 		}
 
-		if !game.BackgroundImageURL.Valid && !game.MetacriticScore.Valid && !game.ReleaseDate.Valid {
+		w.Header().Set("Content-Type", "application/json")
+		if err := json.NewEncoder(w).Encode(game); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
+	}
+}
+
+const InsertMetadataQuery = `
+	INSERT INTO gameMetadata ("gameID", "backgroundImageURL", "metacriticScore", "releaseDate") VALUES ($1, $2, $3, $4)
+`
+
+func getGameMetadata(e *env.Env) func(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	return func(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+		idString := p.ByName("id")
+		id, err := strconv.Atoi(idString)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		game, err := e.Services.Game.Get(id)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		metadata, err := e.Services.Game.GetMetadata(id)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		if metadata == nil {
 			platforms, excludePlatforms := platformToRawgPlatform(game.Platform)
-			metadata, err := e.Services.Metadata.SearchGame(game.Name, platforms, excludePlatforms)
+			newMetadata, err := e.Services.Metadata.SearchGame(game.Name, platforms, excludePlatforms)
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 				return
 			}
 
-			// Update the SQL game table with new metadata
-			updateQuery := "UPDATE game SET backgroundImageURL = $1, releaseDate = $2, metacriticScore = $3 WHERE id = $4"
-			_, err = e.DB.Sql.Exec(updateQuery, metadata.BackgroundImageURL, metadata.ReleaseDate, metadata.MetacriticScore, id)
+			_, err = e.DB.Sql.Exec(InsertMetadataQuery, id, newMetadata.BackgroundImageURL, newMetadata.MetacriticScore, newMetadata.ReleaseDate)
 
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 				return
 			}
 
-			game.BackgroundImageURL = models.JsonNullString{NullString: sql.NullString{String: metadata.BackgroundImageURL, Valid: true}}
-			game.ReleaseDate = models.JsonNullString{NullString: sql.NullString{String: metadata.ReleaseDate, Valid: true}}
-			game.MetacriticScore = models.JsonNullInt64{NullInt64: sql.NullInt64{Int64: int64(metadata.MetacriticScore), Valid: true}}
+			metadata = &models.GameMetadata{}
+			metadata.GameID = game.ID
+			metadata.BackgroundImageURL = models.JsonNullString{NullString: sql.NullString{String: newMetadata.BackgroundImageURL, Valid: true}}
+			metadata.MetacriticScore = models.JsonNullInt64{NullInt64: sql.NullInt64{Int64: int64(newMetadata.MetacriticScore), Valid: true}}
+			metadata.ReleaseDate = models.JsonNullString{NullString: sql.NullString{String: newMetadata.ReleaseDate, Valid: true}}
 		}
 
 		w.Header().Set("Content-Type", "application/json")
-		if err := json.NewEncoder(w).Encode(game); err != nil {
+		if err := json.NewEncoder(w).Encode(metadata); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
 	}

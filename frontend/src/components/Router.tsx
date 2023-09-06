@@ -7,7 +7,7 @@ const Router: FunctionalComponent = () => {
   return (
     <PreactRouter>
       <Home path="/" />
-      <AsyncRoute path="/games/:game" getComponent={() => import("../routes/game").then(module => module.default)} />
+      <AsyncRoute path="/games/:id" getComponent={() => import("../routes/game").then(module => module.default)} />
       <NotFound default />
     </PreactRouter>
   );

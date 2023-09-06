@@ -6,13 +6,17 @@ import (
 )
 
 type Game struct {
-	ID                 uint           `json:"id"`
-	PsnID              string         `json:"psnID"`
-	PsnServiceName     string         `json:"psnServiceName"`
-	Name               string         `json:"name"`
-	Description        JsonNullString `json:"description"`
-	IconURL            string         `json:"iconURL"`
-	Platform           string         `json:"platform"`
+	ID             uint           `json:"id"`
+	PsnID          string         `json:"psnID"`
+	PsnServiceName string         `json:"psnServiceName"`
+	Name           string         `json:"name"`
+	Description    JsonNullString `json:"description"`
+	IconURL        string         `json:"iconURL"`
+	Platform       string         `json:"platform"`
+}
+
+type GameMetadata struct {
+	GameID             uint           `json:"gameID"`
 	BackgroundImageURL JsonNullString `json:"backgroundImageURL"`
 	MetacriticScore    JsonNullInt64  `json:"metacriticScore"`
 	ReleaseDate        JsonNullString `json:"releaseDate"`
