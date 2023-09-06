@@ -8,7 +8,7 @@ const Layout: FunctionalComponent = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <main class="min-y-8 flex-1">
+      <main class="min-y-8 flex-1 flex flex-col">
         <Router />
       </main>
       <Footer />
