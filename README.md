@@ -109,6 +109,19 @@ If you wish to disable this logic, please set the `DISABLE_NEW_VERSION_CHECK` va
 
 ![image](https://github.com/lukecarr/trophies/assets/24438483/6e0444cc-4c87-4706-8809-fd7b2b2010a2)
 
+## Contributors
+
+Thanks goes to these wonderful people ([emoji key][allcontributors-emoji):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
 ## Versioning
 
 Trophies.gg uses [Semantic Versioning v2.0.0][semver].
@@ -125,5 +138,6 @@ Trophies.gg is distributed under the [Apache 2.0](LICENSE) license.
 [docker-images]: https://github.com/lukecarr/trophies/pkgs/container/trophies/versions
 [PlayStation]: https://www.playstation.com/
 [npsso]: https://ca.account.sony.com/api/v1/ssocookie
+[allcontributors-emoji]: https://allcontributors.org/docs/en/emoji-key
 [semver]: https://semver.org/spec/v2.0.0.html
 [rawg]: https://rawg.io/apidocs
