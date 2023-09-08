@@ -1,4 +1,4 @@
-FROM oven/bun:0.8 AS frontend-builder
+FROM oven/bun:1.0 AS frontend-builder
 
 WORKDIR /build
 COPY ./frontend ./
