@@ -13,7 +13,7 @@
     "preact-async-route": "2.2.1",
     "preact-router": "4.1.2",
     "react-icons": "^4.11.0",
-    "swr": "2.2.2"
+    "swr": "2.2.5"
   },
   "devDependencies": {
     "@preact/preset-vite": "2.5.0",
