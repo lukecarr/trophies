@@ -42,7 +42,7 @@ jobs:
         run: echo name=build_date=$(date --iso-8601=minutes) >> $GITHUB_OUTPUT
 
       - name: Build and push image
-        uses: docker/build-push-action@2eb1c1961a95fc15694676618e422e8ba1d63825 # v4.1.1
+        uses: docker/build-push-action@2cdde995de11925a030ce8070c3d77a52ffcf1c0 # v5.3.0
         with:
           context: .
           push: true
